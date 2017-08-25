@@ -22,7 +22,7 @@
 #define DEVICE_NAME_1 "pwmgen1.0"
 
 
-#define PWMGEN_CTRL_REG_0 0x43C00000
+#define PWMGEN_CTRL_REG_0 0x43C20000
 #define PWMGEN_CTRL_REG_1 0x43C30000
 static void *mmio_0;
 static void *mmio_1;

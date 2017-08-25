@@ -22,7 +22,7 @@
 #define DEVICE_NAME_1 "fandect1.0"
 
 
-#define FANDECT_CTRL_REG_0 0x43C20000
+#define FANDECT_CTRL_REG_0 0x43C00000
 #define FANDECT_CTRL_REG_1 0x43C10000
 static void *mmio_0;
 static void *mmio_1;
