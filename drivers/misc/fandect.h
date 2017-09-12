@@ -40,4 +40,8 @@
 
 #define DEVICE_FILE_NAME_0 "/dev/fandect0.0"
 #define DEVICE_FILE_NAME_1 "/dev/fandect1.0"
+#define DEVICE_FILE_NAME_2 "/dev/fandect2.0"
+#define DEVICE_FILE_NAME_3 "/dev/fandect3.0"
+#define DEVICE_FILE_NAME_4 "/dev/fandect4.0"
+#define DEVICE_FILE_NAME_5 "/dev/fandect5.0"
 #endif

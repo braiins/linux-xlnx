@@ -21,9 +21,12 @@
 #define IOCTL_SET_DUTY_0 _IOR(MAGIC_NUM, 1, char *)
 #define IOCTL_SET_FREQ_1 _IOR(MAGIC_NUM, 2, char *)
 #define IOCTL_SET_DUTY_1 _IOR(MAGIC_NUM, 3, char *)
+#define IOCTL_SET_FREQ_2 _IOR(MAGIC_NUM, 4, char *)
+#define IOCTL_SET_DUTY_2 _IOR(MAGIC_NUM, 5, char *)
 
 #define DEBUG
 
 #define DEVICE_FILE_NAME_0 "/dev/pwmgen0.0"
 #define DEVICE_FILE_NAME_1 "/dev/pwmgen1.0"
+#define DEVICE_FILE_NAME_2 "/dev/pwmgen2.0"
 #endif

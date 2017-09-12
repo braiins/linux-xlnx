@@ -549,6 +549,12 @@ config FANDECT_XILINX
        help
          this is the fandect driver
 
+config VIDGEN_XILINX
+       tristate "Innosilicon custom Xilinx zynq vidgen driver"
+       default y
+       help
+         this is the vidgen driver
+
 source "drivers/misc/jesd204b/Kconfig"
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"

@@ -37,6 +37,7 @@ obj-$(CONFIG_DS1682)		+= ds1682.o
 obj-$(CONFIG_TI_DAC7512)	+= ti_dac7512.o
 obj-$(CONFIG_DNA_XILINX)        += dna_xilinx.o
 obj-${CONFIG_FANDECT_XILINX}    += fandect.o
+obj-${CONFIG_VIDGEN_XILINX}     += vidgen.o
 obj-$(CONFIG_C2PORT)		+= c2port/
 obj-$(CONFIG_HMC6352)		+= hmc6352.o
 obj-y				+= eeprom/

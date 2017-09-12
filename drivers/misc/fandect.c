@@ -20,18 +20,42 @@
 #define SUCCESS 0
 #define DEVICE_NAME_0 "fandect0.0"
 #define DEVICE_NAME_1 "fandect1.0"
-
+#define DEVICE_NAME_2 "fandect2.0"
+#define DEVICE_NAME_3 "fandect3.0"
+#define DEVICE_NAME_4 "fandect4.0"
+#define DEVICE_NAME_5 "fandect5.0"
 
 #define FANDECT_CTRL_REG_0 0x43C00000
 #define FANDECT_CTRL_REG_1 0x43C10000
+#define FANDECT_CTRL_REG_2 0x43C70000
+#define FANDECT_CTRL_REG_3 0x43C80000
+#define FANDECT_CTRL_REG_4 0x43C90000
+#define FANDECT_CTRL_REG_5 0x43Ca0000
+
 static void *mmio_0;
 static void *mmio_1;
+static void *mmio_2;
+static void *mmio_3;
+static void *mmio_4;
+static void *mmio_5;
 static int major_num_0;
 static int major_num_1;
+static int major_num_2;
+static int major_num_3;
+static int major_num_4;
+static int major_num_5;
 static struct class *dev_class_0;
 static struct class *dev_class_1;
+static struct class *dev_class_2;
+static struct class *dev_class_3;
+static struct class *dev_class_4;
+static struct class *dev_class_5;
 static struct device *dev_device_0;
 static struct device *dev_device_1;
+static struct device *dev_device_2;
+static struct device *dev_device_3;
+static struct device *dev_device_4;
+static struct device *dev_device_5;
 
 /*
 * Is the device open right now? Used to prevent
@@ -59,7 +83,7 @@ static int Device_Open = 0;
 static int device_open(struct inode *inode, struct file *file)
 {
 	#ifdef DEBUG
-		printk(KERN_INFO "device_open(%p)\n", file);
+		//printk(KERN_INFO "device_open(%p)\n", file);
 	#endif
 	/*
 	* We don't want to talk to two processes at the same time
@@ -77,7 +101,7 @@ static int device_open(struct inode *inode, struct file *file)
 static int device_release(struct inode *inode, struct file *file)
 {
 	#ifdef DEBUG
-		printk(KERN_INFO "device_release(%p,%p)\n", inode, file);
+		//printk(KERN_INFO "device_release(%p,%p)\n", inode, file);
 	#endif
 	/*
 	* We're now ready for our next caller
@@ -96,27 +120,42 @@ static ssize_t device_read(	struct file *file, /* see include/linux/fs.h */
 							loff_t * offset)
 {
 
-	char freq[8];
+	char freq[24];
 
-        if (length == 0 || *offset != 0)
-                return 0;
+    if (length == 0 || *offset != 0)
+        return 0;
 
-	freq[0] = *(unsigned char *)(mmio_0 + 0);
-	freq[1] = *(unsigned char *)(mmio_0 + 1);
-	freq[2] = *(unsigned char *)(mmio_0 + 2);
-	freq[3] = *(unsigned char *)(mmio_0 + 3);
-	freq[4] = *(unsigned char *)(mmio_1 + 0);
-	freq[5] = *(unsigned char *)(mmio_1 + 1);
-	freq[6] = *(unsigned char *)(mmio_1 + 2);
-	freq[7] = *(unsigned char *)(mmio_1 + 3);
+	freq[0]  = *(unsigned char *)(mmio_0 + 0);
+	freq[1]  = *(unsigned char *)(mmio_0 + 1);
+	freq[2]  = *(unsigned char *)(mmio_0 + 2);
+	freq[3]  = *(unsigned char *)(mmio_0 + 3);
+	freq[4]  = *(unsigned char *)(mmio_1 + 0);
+	freq[5]  = *(unsigned char *)(mmio_1 + 1);
+	freq[6]  = *(unsigned char *)(mmio_1 + 2);
+	freq[7]  = *(unsigned char *)(mmio_1 + 3);
+	freq[8]  = *(unsigned char *)(mmio_2 + 0);
+	freq[9]  = *(unsigned char *)(mmio_2 + 1);
+	freq[10] = *(unsigned char *)(mmio_2 + 2);
+	freq[11] = *(unsigned char *)(mmio_2 + 3);
+	freq[12] = *(unsigned char *)(mmio_3 + 0);
+	freq[13] = *(unsigned char *)(mmio_3 + 1);
+	freq[14] = *(unsigned char *)(mmio_3 + 2);
+	freq[15] = *(unsigned char *)(mmio_3 + 3);
+	freq[16] = *(unsigned char *)(mmio_4 + 0);
+	freq[17] = *(unsigned char *)(mmio_4 + 1);
+	freq[18] = *(unsigned char *)(mmio_4 + 2);
+	freq[19] = *(unsigned char *)(mmio_4 + 3);
+	freq[20] = *(unsigned char *)(mmio_5 + 0);
+	freq[21] = *(unsigned char *)(mmio_5 + 1);
+	freq[22] = *(unsigned char *)(mmio_5 + 2);
+	freq[23] = *(unsigned char *)(mmio_5 + 3);
 
-        if (copy_to_user(buffer, freq, length))
-                return -EFAULT;
+    if (copy_to_user(buffer, freq, length))
+        return -EFAULT;
 
-        *offset += length;
+    *offset += length;
 
-
-        return length;
+    return length;
 }
 /*
 * This function is called when somebody tries to
@@ -139,7 +178,7 @@ static ssize_t device_write(struct file *file,
 * calling process), the ioctl call returns the output of this function.
 *
 */
-static int device_ioctl(		struct file *file, /* ditto */
+int fandect_ioctl(		struct file *file, /* ditto */
 					unsigned int ioctl_num, /* number and param for ioctl */
 					unsigned long ioctl_param)
 {
@@ -168,11 +207,11 @@ static int device_ioctl(		struct file *file, /* ditto */
 * the devices table, it can't be local to
 * init_module. NULL is for unimplemented functions.
 */
-struct file_operations fan_Fops = {
+struct file_operations Fops_fandect = {
 	.owner = THIS_MODULE,       
 	.read = device_read,
 	.write = device_write,
-	.unlocked_ioctl = device_ioctl,
+	.unlocked_ioctl = fandect_ioctl,
 	.open = device_open,
 	.release = device_release, /*close */								
 };
@@ -324,14 +363,14 @@ static struct platform_driver fandect_driver = {
 
 static int __init fandect_init(void)
 {
-	printk("<1>Hello module world.\n");
-	printk("<1>Module parameters were (0x%08x) and \"%s\"\n", myint,
-	       mystr);
+	//printk("<1>Hello module world.\n");
+	//printk("<1>Module parameters were (0x%08x) and \"%s\"\n", myint,
+	//       mystr);
 
 	/*
 	* Register the character device (atleast try)
 	*/
-	major_num_0 = register_chrdev(0,DEVICE_NAME_0, &fan_Fops);
+	major_num_0 = register_chrdev(0,DEVICE_NAME_0, &Fops_fandect);
 	if (major_num_0 < 0) 
 	{
 		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
@@ -342,17 +381,17 @@ static int __init fandect_init(void)
 	
 	mmio_0 = ioremap(FANDECT_CTRL_REG_0,0x100);
         
-    printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_0);
-	printk(KERN_INFO "If you want to talk to the device driver,\n");
-	printk(KERN_INFO "create a device file by following command. \n \n");
-	printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_0, major_num_0);
-	printk(KERN_INFO "The device file name is important, because\n");
-	printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
+    //printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_0);
+	//printk(KERN_INFO "If you want to talk to the device driver,\n");
+	//printk(KERN_INFO "create a device file by following command. \n \n");
+	//printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_0, major_num_0);
+	//printk(KERN_INFO "The device file name is important, because\n");
+	//printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
 
 	/*
 	* Register the character device (atleast try)
 	*/
-	major_num_1 = register_chrdev(0,DEVICE_NAME_1, &fan_Fops);
+	major_num_1 = register_chrdev(0,DEVICE_NAME_1, &Fops_fandect);
 
 	/*
 	* Negative values signify an error
@@ -367,12 +406,77 @@ static int __init fandect_init(void)
 	
 	mmio_1 = ioremap(FANDECT_CTRL_REG_1,0x100);
 
-    printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_1);
-	printk(KERN_INFO "If you want to talk to the device driver,\n");
-	printk(KERN_INFO "create a device file by following command. \n \n");
-	printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_1, major_num_1);
-	printk(KERN_INFO "The device file name is important, because\n");
-	printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
+	/*
+	* Register the character device (atleast try)
+	*/
+	major_num_2 = register_chrdev(0,DEVICE_NAME_2, &Fops_fandect);
+
+	/*
+	* Negative values signify an error
+	*/
+	if (major_num_2 < 0) 
+	{
+		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
+	}
+	dev_class_2 = class_create(THIS_MODULE, DEVICE_NAME_2);
+
+	dev_device_2 = device_create(dev_class_2, NULL, MKDEV(major_num_2, 0), NULL, DEVICE_NAME_2);
+	
+	mmio_2 = ioremap(FANDECT_CTRL_REG_2,0x100);
+
+	/*
+	* Register the character device (atleast try)
+	*/
+	major_num_3 = register_chrdev(0,DEVICE_NAME_3, &Fops_fandect);
+
+	/*
+	* Negative values signify an error
+	*/
+	if (major_num_3 < 0) 
+	{
+		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
+	}
+	dev_class_3 = class_create(THIS_MODULE, DEVICE_NAME_3);
+
+	dev_device_3 = device_create(dev_class_3, NULL, MKDEV(major_num_3, 0), NULL, DEVICE_NAME_3);
+	
+	mmio_3 = ioremap(FANDECT_CTRL_REG_3,0x100);
+
+	/*
+	* Register the character device (atleast try)
+	*/
+	major_num_4 = register_chrdev(0,DEVICE_NAME_4, &Fops_fandect);
+
+	/*
+	* Negative values signify an error
+	*/
+	if (major_num_4 < 0) 
+	{
+		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
+	}
+	dev_class_4 = class_create(THIS_MODULE, DEVICE_NAME_4);
+
+	dev_device_4 = device_create(dev_class_4, NULL, MKDEV(major_num_4, 0), NULL, DEVICE_NAME_4);
+	
+	mmio_4 = ioremap(FANDECT_CTRL_REG_4,0x100);
+
+	/*
+	* Register the character device (atleast try)
+	*/
+	major_num_5 = register_chrdev(0,DEVICE_NAME_5, &Fops_fandect);
+
+	/*
+	* Negative values signify an error
+	*/
+	if (major_num_5 < 0) 
+	{
+		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
+	}
+	dev_class_5 = class_create(THIS_MODULE, DEVICE_NAME_5);
+
+	dev_device_5 = device_create(dev_class_5, NULL, MKDEV(major_num_5, 0), NULL, DEVICE_NAME_5);
+	
+	mmio_5 = ioremap(FANDECT_CTRL_REG_5,0x100);
 
 	return platform_driver_register(&fandect_driver);
 }

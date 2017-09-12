@@ -20,18 +20,24 @@
 #define SUCCESS 0
 #define DEVICE_NAME_0 "pwmgen0.0"
 #define DEVICE_NAME_1 "pwmgen1.0"
+#define DEVICE_NAME_2 "pwmgen2.0"
 
 
 #define PWMGEN_CTRL_REG_0 0x43C20000
 #define PWMGEN_CTRL_REG_1 0x43C30000
+#define PWMGEN_CTRL_REG_2 0x43C60000
 static void *mmio_0;
 static void *mmio_1;
+static void *mmio_2;
 static int major_num_0;
 static int major_num_1;
+static int major_num_2;
 static struct class *dev_class_0;
 static struct class *dev_class_1;
+static struct class *dev_class_2;
 static struct device *dev_device_0;
 static struct device *dev_device_1;
+static struct device *dev_device_2;
 
 /*
 * Is the device open right now? Used to prevent
@@ -60,13 +66,23 @@ static void set_pwmgen_freq_1(uint32_t value)
         *(unsigned int *)(mmio_1) = value + 0x80000000;
 }
 
+static void set_pwmgen_duty_2(uint32_t value)
+{
+        *((unsigned int *)(mmio_2 + 4)) = value + 0x80000000;
+}
+
+static void set_pwmgen_freq_2(uint32_t value)
+{
+        *(unsigned int *)(mmio_2) = value + 0x80000000;
+}
+
 /*
 * This is called whenever a process attempts to open the device file
 */
 static int device_open(struct inode *inode, struct file *file)
 {
 	#ifdef DEBUG
-		printk(KERN_INFO "device_open(%p)\n", file);
+		//printk(KERN_INFO "device_open(%p)\n", file);
 	#endif
 	/*
 	* We don't want to talk to two processes at the same time
@@ -84,7 +100,7 @@ static int device_open(struct inode *inode, struct file *file)
 static int device_release(struct inode *inode, struct file *file)
 {
 	#ifdef DEBUG
-		printk(KERN_INFO "device_release(%p,%p)\n", inode, file);
+		//printk(KERN_INFO "device_release(%p,%p)\n", inode, file);
 	#endif
 	/*
 	* We're now ready for our next caller
@@ -125,7 +141,7 @@ static ssize_t device_write(struct file *file,
 * calling process), the ioctl call returns the output of this function.
 *
 */
-int device_ioctl(			struct file *file, /* ditto */
+int pwmgen_ioctl(			struct file *file, /* ditto */
 					unsigned int ioctl_num, /* number and param for ioctl */
 					unsigned long ioctl_param)
 {
@@ -149,6 +165,12 @@ int device_ioctl(			struct file *file, /* ditto */
         	case IOCTL_SET_FREQ_1:
         	        set_pwmgen_freq_1(ioctl_param);
         	break;	
+        	case IOCTL_SET_DUTY_2:
+        	        set_pwmgen_duty_2(ioctl_param);
+        	break;
+        	case IOCTL_SET_FREQ_2:
+        	        set_pwmgen_freq_2(ioctl_param);
+        	break;	
 	}
 	return SUCCESS;
 }
@@ -160,11 +182,11 @@ int device_ioctl(			struct file *file, /* ditto */
 * the devices table, it can't be local to
 * init_module. NULL is for unimplemented functions.
 */
-struct file_operations Fops = {
+struct file_operations Fops_pwmgen = {
 	.owner = THIS_MODULE,       
 	.read = device_read,
 	.write = device_write,
-	.unlocked_ioctl = device_ioctl,
+	.unlocked_ioctl = pwmgen_ioctl,
 	.open = device_open,
 	.release = device_release, /*close */								
 };
@@ -316,14 +338,14 @@ static struct platform_driver pwmgen_driver = {
 
 static int __init pwmgen_init(void)
 {
-	printk("<1>Hello module world.\n");
-	printk("<1>Module parameters were (0x%08x) and \"%s\"\n", myint,
-	       mystr);
+	//printk("<1>Hello module world.\n");
+	//printk("<1>Module parameters were (0x%08x) and \"%s\"\n", myint,
+	//       mystr);
 
 	/*
 	* Register the character device (atleast try)
 	*/
-	major_num_0 = register_chrdev(0,DEVICE_NAME_0, &Fops);
+	major_num_0 = register_chrdev(0,DEVICE_NAME_0, &Fops_pwmgen);
 
 	/*
 	* Negative values signify an error
@@ -338,18 +360,18 @@ static int __init pwmgen_init(void)
 	
 	mmio_0 = ioremap(PWMGEN_CTRL_REG_0,0x100);
         
-    printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_0);
-	printk(KERN_INFO "If you want to talk to the device driver,\n");
-	printk(KERN_INFO "create a device file by following command. \n \n");
-	printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_0, major_num_0);
-	printk(KERN_INFO "The device file name is important, because\n");
-	printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
+    //printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_0);
+	//printk(KERN_INFO "If you want to talk to the device driver,\n");
+	//printk(KERN_INFO "create a device file by following command. \n \n");
+	//printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_0, major_num_0);
+	//printk(KERN_INFO "The device file name is important, because\n");
+	//printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
 
 
 	/*
 	* Register the character device (atleast try)
 	*/
-	major_num_1 = register_chrdev(0,DEVICE_NAME_1, &Fops);
+	major_num_1 = register_chrdev(0,DEVICE_NAME_1, &Fops_pwmgen);
 
 	/*
 	* Negative values signify an error
@@ -364,13 +386,37 @@ static int __init pwmgen_init(void)
 	
 	mmio_1 = ioremap(PWMGEN_CTRL_REG_1,0x100);
         
-    printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_1);
-	printk(KERN_INFO "If you want to talk to the device driver,\n");
-	printk(KERN_INFO "create a device file by following command. \n \n");
-	printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_1, major_num_1);
-	printk(KERN_INFO "The device file name is important, because\n");
-	printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
+    //printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_1);
+	//printk(KERN_INFO "If you want to talk to the device driver,\n");
+	//printk(KERN_INFO "create a device file by following command. \n \n");
+	//printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_1, major_num_1);
+	//printk(KERN_INFO "The device file name is important, because\n");
+	//printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
 
+	/*
+	* Register the character device (atleast try)
+	*/
+	major_num_2 = register_chrdev(0,DEVICE_NAME_2, &Fops_pwmgen);
+
+	/*
+	* Negative values signify an error
+	*/
+	if (major_num_2 < 0) 
+	{
+		printk(KERN_ALERT "%s failed with \n","Sorry, registering the character device ");
+	}
+        dev_class_2 = class_create(THIS_MODULE, DEVICE_NAME_2);
+
+        dev_device_2 = device_create(dev_class_2, NULL, MKDEV(major_num_2, 0), NULL, DEVICE_NAME_2);
+	
+	mmio_2 = ioremap(PWMGEN_CTRL_REG_2,0x100);
+        
+    //printk(KERN_INFO "%s the major device number is %d.\n","Registeration is a success", major_num_2);
+	//printk(KERN_INFO "If you want to talk to the device driver,\n");
+	//printk(KERN_INFO "create a device file by following command. \n \n");
+	//printk(KERN_INFO "mknod %s c %d 0\n\n", DEVICE_NAME_2, major_num_2);
+	//printk(KERN_INFO "The device file name is important, because\n");
+	//printk(KERN_INFO "the ioctl program assumes that's the file you'll use\n");
 
 	return platform_driver_register(&pwmgen_driver);
 }
