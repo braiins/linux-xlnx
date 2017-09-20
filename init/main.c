@@ -11,6 +11,8 @@
 
 #define DEBUG		/* Enable initcall_debug */
 
+#include <inno_version.h>
+
 #include <linux/types.h>
 #include <linux/module.h>
 #include <linux/proc_fs.h>
@@ -525,6 +527,13 @@ asmlinkage __visible void __init start_kernel(void)
 	boot_cpu_init();
 	page_address_init();
 	pr_notice("%s", linux_banner);
+	pr_notice("BUILD_SERVER: %s\n", INNO_VERSION_BUILD_SERVER);
+	pr_notice("BUILD_USER:   %s\n", INNO_VERSION_BUILD_USER);
+	pr_notice("COMMIT_HASH:  %s\n", INNO_VERSION_COMMIT_HASH);
+	pr_notice("COMMIT_USER:  %s\n", INNO_VERSION_COMMIT_USER);
+	pr_notice("COMMIT_UE:    %s\n", INNO_VERSION_COMMIT_USER_EMAIL);
+	pr_notice("COMMIT_TIME:  %s\n", INNO_VERSION_COMMIT_TIME);
+
 	setup_arch(&command_line);
 	mm_init_cpumask(&init_mm);
 	setup_command_line(command_line);
