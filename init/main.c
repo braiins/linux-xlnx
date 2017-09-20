@@ -532,7 +532,7 @@ asmlinkage __visible void __init start_kernel(void)
 	pr_notice("COMMIT_HASH:  %s\n", INNO_VERSION_COMMIT_HASH);
 	pr_notice("COMMIT_USER:  %s\n", INNO_VERSION_COMMIT_USER);
 	pr_notice("COMMIT_UE:    %s\n", INNO_VERSION_COMMIT_USER_EMAIL);
-	pr_notice("COMMIT_TIME:  %s\n", INNO_VERSION_COMMIT_TIME);
+	pr_notice("COMMIT_TIME:  %s\n\n", INNO_VERSION_COMMIT_TIME);
 
 	setup_arch(&command_line);
 	mm_init_cpumask(&init_mm);
