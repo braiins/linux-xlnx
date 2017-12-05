@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 MAKE_JOBS=$2
 
 #git co inno
