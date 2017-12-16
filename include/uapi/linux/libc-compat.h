@@ -51,6 +51,14 @@
 /* We have included libc headers... */
 #if !defined(__KERNEL__)
 
+/* musl defines the ethhdr struct itself in its netinet/if_ether.h.
+ * Glibc just includes the kernel header and uses a different guard. */
+#if defined(_NETINET_IF_ETHER_H)
+#define __UAPI_DEF_ETHHDR		0
+#else
+#define __UAPI_DEF_ETHHDR		1
+#endif
+
 /* Coordinate with libc netinet/in.h header. */
 #if defined(_NETINET_IN_H)
 
@@ -116,6 +124,9 @@
  * or we are being included in the kernel, then define everything
  * that we need. */
 #else /* defined(__KERNEL__) */
+
+/* Definitions for if_ether.h */
+#define __UAPI_DEF_ETHHDR 		1
 
 /* Definitions for in.h */
 #define __UAPI_DEF_IN_ADDR		1
