@@ -268,8 +268,8 @@
                     label = "inno-cfg";
                     reg = <0x06e00000 0x00a00000>;
                 };
-                partition@nand-rootfsb {
-                    label = "nand-rootfsb";
+                partition@rootfs_data {
+                    label = "rootfs_data";
                     reg = <0x07800000 0x06400000>;
                 };
             };
@@ -711,12 +711,6 @@
         read_dna@43c40000 {
             compatible = "xlnx,read-dna-1.0";
             reg = <0x43c40000 0x00010000>;
-            xlnx,s00-axi-addr-width = <0x00000004>;
-            xlnx,s00-axi-data-width = <0x00000020>;
-        };
-        vid_gen@43c50000 {
-            compatible = "xlnx,vid-gen-1.0";
-            reg = <0x43c50000 0x00010000>;
             xlnx,s00-axi-addr-width = <0x00000004>;
             xlnx,s00-axi-data-width = <0x00000020>;
         };
