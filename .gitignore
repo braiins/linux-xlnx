@@ -115,3 +115,6 @@ all.config
 
 # inno version header
 include/inno_version.h
+
+# LEDE directory
+/user_headers/
