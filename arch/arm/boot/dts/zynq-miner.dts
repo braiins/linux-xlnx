@@ -244,34 +244,6 @@
                 arm,nand-cycle-t4 = <0x00000002>;
                 arm,nand-cycle-t5 = <0x00000001>;
                 arm,nand-cycle-t6 = <0x00000002>;
-                partition@nand-boot {
-                    label = "BOOT.bin";
-                    reg = <0x00000000 0x00400000>;
-                };
-                partition@nand-env {
-                    label = "nand-env";
-                    reg = <0x00400000 0x00080000>;
-                };
-                partition@nand-device-tree {
-                    label = "nand-device-tree";
-                    reg = <0x00480000 0x00080000>;
-                };
-                partition@nand-linux {
-                    label = "nand-kernel";
-                    reg = <0x00500000 0x00500000>;
-                };
-                partition@nand-rootfsa {
-                    label = "nand-rootfsa";
-                    reg = <0x00a00000 0x06400000>;
-                };
-                partition@inno-cfg {
-                    label = "inno-cfg";
-                    reg = <0x06e00000 0x00a00000>;
-                };
-                partition@rootfs_data {
-                    label = "rootfs_data";
-                    reg = <0x07800000 0x06400000>;
-                };
             };
             flash@e2000000 {
                 status = "disabled";
