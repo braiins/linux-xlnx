@@ -728,6 +728,7 @@ dtb-$(CONFIG_ARCH_ZYNQ) += \
 	zynq-afx-nand.dtb \
 	zynq-afx-nor.dtb \
 	zynq-cc108.dtb \
+	zynq-miner.dtb \
 	zynq-parallella.dtb \
 	zynq-zc702.dtb \
 	zynq-zc706.dtb \
