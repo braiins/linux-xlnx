@@ -13,6 +13,7 @@
 / {
     #address-cells = <0x00000001>;
     #size-cells = <0x00000001>;
+    model = "Zynq ZC702 Miner Control Board";
     compatible = "xlnx,zynq-7000";
     chosen {
     };
