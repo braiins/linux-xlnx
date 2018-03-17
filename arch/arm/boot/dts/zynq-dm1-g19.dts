@@ -3,6 +3,7 @@
 / {
 	#address-cells = <0x1>;
 	#size-cells = <0x1>;
+	model = "DragonMint T1/G19 Miner Control Board";
 	compatible = "xlnx,zynq-7000";
 
 	chosen {

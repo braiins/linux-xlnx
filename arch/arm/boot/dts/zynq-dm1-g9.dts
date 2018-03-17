@@ -1,19 +1,9 @@
 /dts-v1/;
-// magic:		0xd00dfeed
-// totalsize:		0x3c16 (15382)
-// off_dt_struct:	0x38
-// off_dt_strings:	0x36f0
-// off_mem_rsvmap:	0x28
-// version:		17
-// last_comp_version:	16
-// boot_cpuid_phys:	0x0
-// size_dt_strings:	0x526
-// size_dt_struct:	0x36b8
 
 / {
     #address-cells = <0x00000001>;
     #size-cells = <0x00000001>;
-    model = "Zynq ZC702 Miner Control Board";
+    model = "DragonMint T1/G9 Miner Control Board";
     compatible = "xlnx,zynq-7000";
     chosen {
     };
