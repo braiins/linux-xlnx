@@ -49,11 +49,22 @@ static int xlnx_pwm_config(struct pwm_chip *chip,
 			      int duty_ns, int period_ns){
 
 	struct xlnx_pwm_chip *pc;
+	int period_ticks, duty_ticks;
 
 	pc = container_of(chip, struct xlnx_pwm_chip, chip);
 
-	iowrite32((duty_ns/pc->scaler) - 2, pc->mmio_base + DUTY);
-	iowrite32((period_ns/pc->scaler) - 2, pc->mmio_base + PERIOD);
+	duty_ticks = duty_ns/pc->scaler;
+	period_ticks = period_ns/pc->scaler;
+
+	if (period_ticks < 2)
+		period_ticks = 2;
+	if (duty_ticks < 1)
+		duty_ticks = 1;
+	if (duty_ticks > period_ticks - 1)
+		duty_ticks = period_ticks - 1;
+
+	iowrite32(duty_ticks, pc->mmio_base + DUTY);
+	iowrite32(period_ticks, pc->mmio_base + PERIOD);
 
 	return 0;
 }
