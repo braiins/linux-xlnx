@@ -537,12 +537,6 @@ config XILINX_TRAFGEN
 
 	  If unsure, say N
 
-config DNA_XILINX
-       tristate "Innosilicon custom Xilinx ZYNQ DNA driver"
-       default y
-       help
-         Driver for the Xilinx DNA from fpga.
-
 config FANDECT_XILINX
        tristate "Innosilicon custom Xilinx zynq fandect driver"
        default y
