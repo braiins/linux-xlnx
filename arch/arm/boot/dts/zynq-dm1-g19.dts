@@ -495,6 +495,24 @@
 			xlnx,tri-default-2 = <0xffffffff>;
 		};
 
+		leds {
+			compatible = "gpio-leds";
+			green {
+				label = "Green LED";
+				gpios = <&axi_gpio_output 2 0>;
+				linux,default-trigger = "mmc0";
+			};
+			red {
+				label = "Red LED";
+				gpios = <&axi_gpio_output 3 0>;
+				linux,default-trigger = "default-on";
+			};
+			red-inside {
+				label = "Red LED (inside)";
+				gpios = <&axi_gpio_output 4 0>;
+				linux,default-trigger = "heartbeat";
+			};
+		};
 		axi_gpio_output1: gpio@41220000 {
 			#gpio-cells = <0x2>;
 			compatible = "xlnx,xps-gpio-1.00.a";
