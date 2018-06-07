@@ -609,6 +609,44 @@
 			};
 		};
 
+		axi_quad_spi_4: axi_quad_spi@41e40000 {
+			bits-per-word = <0x8>;
+			compatible = "xlnx,xps-spi-2.00.a";
+			fifo-size = <0x100>;
+			interrupt-parent = <0x4>;
+			interrupts = <0x0 0x21 0x1>;
+			num-cs = <0x1>;
+			reg = <0x41e40000 0x10000>;
+			xlnx,num-ss-bits = <0x1>;
+			xlnx,spi-mode = <0x1>;
+			spidev@0 {
+				compatible = "rohm,dh2228fv";
+				#address-cells = <0x00000001>;
+				#size-cells = <0x00000000>;
+				reg = <0x00000000>;
+				spi-max-frequency = <0x01312d00>;
+			};
+		};
+
+		axi_quad_spi_5: axi_quad_spi@41e50000 {
+			bits-per-word = <0x8>;
+			compatible = "xlnx,xps-spi-2.00.a";
+			fifo-size = <0x100>;
+			interrupt-parent = <0x4>;
+			interrupts = <0x0 0x22 0x1>;
+			num-cs = <0x1>;
+			reg = <0x41e50000 0x10000>;
+			xlnx,num-ss-bits = <0x1>;
+			xlnx,spi-mode = <0x1>;
+			spidev@0 {
+				compatible = "rohm,dh2228fv";
+				#address-cells = <0x00000001>;
+				#size-cells = <0x00000000>;
+				reg = <0x00000000>;
+				spi-max-frequency = <0x01312d00>;
+			};
+		};
+
 		axi_timer_0: timer@42800000 {
 			clock-frequency = <0x2faf080>;
 			clock-names = "fclk0";
@@ -674,6 +712,8 @@
 		spi1 = "/amba_pl/axi_quad_spi@41e10000";
 		spi2 = "/amba_pl/axi_quad_spi@41e20000";
 		spi3 = "/amba_pl/axi_quad_spi@41e30000";
+		spi4 = "/amba_pl/axi_quad_spi@41e40000";
+		spi5 = "/amba_pl/axi_quad_spi@41e50000";
 	};
 
 	memory {
