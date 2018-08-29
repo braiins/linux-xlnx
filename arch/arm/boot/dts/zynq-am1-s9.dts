@@ -521,6 +521,28 @@
 			xlnx,use-modem-ports = <0x1>;
 			xlnx,use-user-ports = <0x1>;
 		};
+		axi_uart16550_1: serial@43c80000 {
+			clock-frequency = <0x2faf080>;
+			clock-names = "ref_clk";
+			clocks = <0x1 0x0>;
+			compatible = "xlnx,xps-uart16550-2.00.a", "ns16550a";
+			current-speed = <0x1c200>;
+			device_type = "serial";
+			interrupt-parent = <0x4>;
+			interrupts = <0x0 0x35 0x4>;
+			port-number = <0x2>;
+			reg = <0x43c80000 0x10000>;
+			reg-offset = <0x1000>;
+			reg-shift = <0x2>;
+			xlnx,external-xin-clk-hz = <0x17d7840>;
+			xlnx,external-xin-clk-hz-d = <0x19>;
+			xlnx,has-external-rclk = <0x0>;
+			xlnx,has-external-xin = <0x0>;
+			xlnx,is-a-16550 = <0x1>;
+			xlnx,s-axi-aclk-freq-hz-d = "50.0";
+			xlnx,use-modem-ports = <0x1>;
+			xlnx,use-user-ports = <0x1>;
+		};
 	};
 
 	chosen {
