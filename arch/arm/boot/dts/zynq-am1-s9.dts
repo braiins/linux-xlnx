@@ -146,7 +146,7 @@
 			reg = <0xf8f00200 0x100>;
 		};
 
-		ps7-gpio@e000a000 {
+		zynq_gpio: ps7-gpio@e000a000 {
 			#gpio-cells = <0x2>;
 			clocks = <0x2 0x2a>;
 			compatible = "xlnx,zynq-gpio-1.0";
@@ -157,6 +157,25 @@
 			interrupt-parent = <0x3>;
 			interrupts = <0x0 0x14 0x4>;
 			reg = <0xe000a000 0x1000>;
+		};
+
+		leds {
+			compatible = "gpio-leds";
+			green {
+				label = "Green LED";
+				gpios = <&zynq_gpio 38 0>;
+				linux,default-trigger = "default-on";
+			};
+			red {
+				label = "Red LED";
+				gpios = <&zynq_gpio 37 0>;
+				linux,default-trigger = "default-on";
+			};
+			red-inside {
+				label = "Red LED (inside)";
+				gpios = <&zynq_gpio 15 0>;
+				linux,default-trigger = "heartbeat";
+			};
 		};
 
 		ps7-iop-bus-config@e0200000 {
