@@ -549,18 +549,6 @@ config VIDGEN_XILINX
        help
          this is the vidgen driver
 
-config BITMAIN_FPGA_MEM
-	tristate "Bitmain FPGA Memory"
-	default n
-	help
-	  This driver requires bmminer.
-
-config BITMAIN_AXI_FPGA
-	tristate "Bitmain AXI FPGA"
-	default n
-	help
-	  This driver requires bmminer.
-
 
 source "drivers/misc/jesd204b/Kconfig"
 source "drivers/misc/c2port/Kconfig"
