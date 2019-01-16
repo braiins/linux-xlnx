@@ -159,6 +159,21 @@
 			reg = <0xe000a000 0x1000>;
 		};
 
+		gpio-keys {
+			compatible = "gpio-keys-polled";
+			poll-interval = <100>;
+			reset-btn {
+				label = "KEY_RESTART";
+				gpios = <&zynq_gpio 47 1>;
+				linux,code = <0x198>;
+			};
+			ip-report-btn {
+				label = "BTN_0";
+				gpios = <&zynq_gpio 51 1>;
+				linux,code = <0x100>;
+			};
+		};
+
 		leds {
 			compatible = "gpio-leds";
 			green {
