@@ -577,6 +577,27 @@
 			xlnx,use-modem-ports = <0x1>;
 			xlnx,use-user-ports = <0x1>;
 		};
+		uio1 {
+			compatible = "generic-uio";
+			reg = <0x43c00000 0x1000>;
+		};
+		uio0 {
+			compatible = "generic-uio";
+			reg = <0x1f000000 0x1000000>;
+		};
+		chain8 {
+			compatible = "generic-uio";
+			reg = <0x43c90000 0x1000>;
+			interrupts = <0 54 1>;
+			interrupt-parent = <0x3>;
+		};
+		chain1 {
+			compatible = "generic-uio";
+			reg = <0x43ca0000 0x1000>;
+			interrupts = <0 55 1>;
+			interrupt-parent = <0x3>;
+		};
+
 	};
 
 	chosen {
