@@ -577,27 +577,63 @@
 			xlnx,use-modem-ports = <0x1>;
 			xlnx,use-user-ports = <0x1>;
 		};
-		uio1 {
+		chain5-mem {
 			compatible = "generic-uio";
-			reg = <0x43c00000 0x1000>;
+			reg = <0x43c50000 0x1000>;
 		};
-		uio0 {
+		chain5-work-tx {
 			compatible = "generic-uio";
-			reg = <0x1f000000 0x1000000>;
-		};
-		chain8 {
-			compatible = "generic-uio";
-			reg = <0x43c90000 0x1000>;
-			interrupts = <0 54 1>;
+			interrupts = <0 35 4>;
 			interrupt-parent = <0x3>;
 		};
-		chain1 {
+		chain5-work-rx {
 			compatible = "generic-uio";
-			reg = <0x43ca0000 0x1000>;
-			interrupts = <0 55 1>;
+			interrupts = <0 36 4>;
 			interrupt-parent = <0x3>;
 		};
-
+		chain5-cmd-rx {
+			compatible = "generic-uio";
+			interrupts = <0 52 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain6-mem {
+			compatible = "generic-uio";
+			reg = <0x43c60000 0x1000>;
+		};
+		chain6-work-tx {
+			compatible = "generic-uio";
+			interrupts = <0 53 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain6-work-rx {
+			compatible = "generic-uio";
+			interrupts = <0 54 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain6-cmd-rx {
+			compatible = "generic-uio";
+			interrupts = <0 55 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain7-mem {
+			compatible = "generic-uio";
+			reg = <0x43c70000 0x1000>;
+		};
+		chain7-work-tx {
+			compatible = "generic-uio";
+			interrupts = <0 56 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain7-work-rx {
+			compatible = "generic-uio";
+			interrupts = <0 57 4>;
+			interrupt-parent = <0x3>;
+		};
+		chain7-cmd-rx {
+			compatible = "generic-uio";
+			interrupts = <0 58 4>;
+			interrupt-parent = <0x3>;
+		};
 	};
 
 	chosen {
