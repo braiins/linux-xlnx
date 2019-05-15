@@ -514,6 +514,16 @@
 			xlnx,tri-default-2 = <0xffffffff>;
 		};
 
+		gpio-keys {
+			compatible = "gpio-keys-polled";
+			poll-interval = <100>;
+			ip-report-btn {
+				label = "BTN_0";
+				gpios = <&axi_gpio_input1 0 1>;
+				linux,code = <0x100>;
+			};
+		};
+
 		leds {
 			compatible = "gpio-leds";
 			green {
