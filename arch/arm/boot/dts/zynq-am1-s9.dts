@@ -517,130 +517,74 @@
 			interrupts = <0x0 0x1d 0x4>;
 			reg = <0x41600000 0x10000>;
 		};
-
-		axi_timer_0: timer@42800000 {
-			clock-frequency = <0x2faf080>;
-			clock-names = "fclk0";
-			#pwm-cells = <2>;
-			clocks = <&clkc 15>;
-			compatible = "xlnx,pwm-xlnx";
-			reg = <0x42800000 0x10000>;
-			xlnx,count-width = <0x20>;
-			xlnx,gen0-assert = <0x1>;
-			xlnx,gen1-assert = <0x1>;
-			xlnx,one-timer-only = <0x0>;
-			xlnx,trig0-assert = <0x1>;
-			xlnx,trig1-assert = <0x1>;
-		};
-
-		axi_uart16550_0: serial@43c70000 {
-			clock-frequency = <0x2faf080>;
-			clock-names = "ref_clk";
-			clocks = <0x1 0x0>;
-			compatible = "xlnx,xps-uart16550-2.00.a", "ns16550a";
-			current-speed = <0x1c200>;
-			device_type = "serial";
-			interrupt-parent = <0x4>;
-			interrupts = <0x0 0x34 0x4>;
-			port-number = <0x1>;
-			reg = <0x43c70000 0x10000>;
-			reg-offset = <0x1000>;
-			reg-shift = <0x2>;
-			xlnx,external-xin-clk-hz = <0x17d7840>;
-			xlnx,external-xin-clk-hz-d = <0x19>;
-			xlnx,has-external-rclk = <0x0>;
-			xlnx,has-external-xin = <0x0>;
-			xlnx,is-a-16550 = <0x1>;
-			xlnx,s-axi-aclk-freq-hz-d = "50.0";
-			xlnx,use-modem-ports = <0x1>;
-			xlnx,use-user-ports = <0x1>;
-		};
-		axi_uart16550_1: serial@43c80000 {
-			clock-frequency = <0x2faf080>;
-			clock-names = "ref_clk";
-			clocks = <0x1 0x0>;
-			compatible = "xlnx,xps-uart16550-2.00.a", "ns16550a";
-			current-speed = <0x1c200>;
-			device_type = "serial";
-			interrupt-parent = <0x4>;
-			interrupts = <0x0 0x35 0x4>;
-			port-number = <0x2>;
-			reg = <0x43c80000 0x10000>;
-			reg-offset = <0x1000>;
-			reg-shift = <0x2>;
-			xlnx,external-xin-clk-hz = <0x17d7840>;
-			xlnx,external-xin-clk-hz-d = <0x19>;
-			xlnx,has-external-rclk = <0x0>;
-			xlnx,has-external-xin = <0x0>;
-			xlnx,is-a-16550 = <0x1>;
-			xlnx,s-axi-aclk-freq-hz-d = "50.0";
-			xlnx,use-modem-ports = <0x1>;
-			xlnx,use-user-ports = <0x1>;
+		fan-control {
+			compatible = "generic-uio";
+			reg = <0x42800000 0x1000>;
 		};
 		chain6-common {
 			compatible = "generic-uio";
-			reg = <0x43c50000 0x1000>;
+			reg = <0x43c00000 0x1000>;
 		};
 		chain6-cmd-rx {
 			compatible = "generic-uio";
-			reg = <0x43c51000 0x1000>;
-			interrupts = <0 52 4>;
+			reg = <0x43c01000 0x1000>;
+			interrupts = <0 32 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain6-work-rx {
 			compatible = "generic-uio";
-			reg = <0x43c52000 0x1000>;
-			interrupts = <0 36 4>;
+			reg = <0x43c02000 0x1000>;
+			interrupts = <0 31 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain6-work-tx {
 			compatible = "generic-uio";
-			reg = <0x43c53000 0x1000>;
-			interrupts = <0 35 4>;
+			reg = <0x43c03000 0x1000>;
+			interrupts = <0 30 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain7-common {
 			compatible = "generic-uio";
-			reg = <0x43c60000 0x1000>;
+			reg = <0x43c10000 0x1000>;
 		};
 		chain7-cmd-rx {
 			compatible = "generic-uio";
-			reg = <0x43c61000 0x1000>;
-			interrupts = <0 55 4>;
+			reg = <0x43c11000 0x1000>;
+			interrupts = <0 35 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain7-work-rx {
 			compatible = "generic-uio";
-			reg = <0x43c62000 0x1000>;
-			interrupts = <0 54 4>;
+			reg = <0x43c12000 0x1000>;
+			interrupts = <0 34 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain7-work-tx {
 			compatible = "generic-uio";
-			reg = <0x43c63000 0x1000>;
-			interrupts = <0 53 4>;
+			reg = <0x43c13000 0x1000>;
+			interrupts = <0 33 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain8-common {
 			compatible = "generic-uio";
-			reg = <0x43c70000 0x1000>;
+			reg = <0x43c20000 0x1000>;
 		};
 		chain8-cmd-rx {
 			compatible = "generic-uio";
-			reg = <0x43c71000 0x1000>;
-			interrupts = <0 58 4>;
+			reg = <0x43c21000 0x1000>;
+			interrupts = <0 53 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain8-work-rx {
 			compatible = "generic-uio";
-			reg = <0x43c72000 0x1000>;
-			interrupts = <0 57 4>;
+			reg = <0x43c22000 0x1000>;
+			interrupts = <0 52 4>;
 			interrupt-parent = <0x3>;
 		};
 		chain8-work-tx {
 			compatible = "generic-uio";
-			reg = <0x43c73000 0x1000>;
-			interrupts = <0 56 4>;
+			reg = <0x43c23000 0x1000>;
+			interrupts = <0 36 4>;
 			interrupt-parent = <0x3>;
 		};
 	};
