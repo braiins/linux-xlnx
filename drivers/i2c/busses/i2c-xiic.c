@@ -510,8 +510,8 @@ static int xiic_bus_busy(struct xiic_i2c *i2c)
 
 static int xiic_busy(struct xiic_i2c *i2c)
 {
-	int tries = 3;
 	int err;
+	int try;
 
 	if (i2c->tx_msg)
 		return -EBUSY;
@@ -521,7 +521,14 @@ static int xiic_busy(struct xiic_i2c *i2c)
 	 * give it at most 3 ms to wake
 	 */
 	err = xiic_bus_busy(i2c);
-	while (err && tries--) {
+	for (try = 1; err && try <= 16; try++) {
+		if (try % 4 == 0) {
+			/* try to reset the controller if it has been stuck in
+			 * "busy" state for more than 3 seconds
+			 */
+			pr_err("i2c-xiic: bus lock-up detected, resetting\n");
+			xiic_reinit(i2c);
+		}
 		msleep(1);
 		err = xiic_bus_busy(i2c);
 	}
