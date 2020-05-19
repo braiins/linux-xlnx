@@ -17,6 +17,7 @@
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
+	model = "Antminer S15 Miner Control Board";
 	compatible = "xlnx,zynq-7000";
 
 	cpus {
