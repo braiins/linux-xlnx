@@ -151,6 +151,25 @@
 			gpio-mask-low = <0x5600>;
 		};
 
+		leds {
+			compatible = "gpio-leds";
+			green {
+				label = "Green LED";
+				gpios = <&gpio0 36 0>;
+				linux,default-trigger = "default-on";
+			};
+			red {
+				label = "Red LED";
+				gpios = <&gpio0 35 0>;
+				linux,default-trigger = "default-on";
+			};
+			red-inside {
+				label = "Red LED (inside)";
+				gpios = <&axi_gpio_output 4 1>;
+				linux,default-trigger = "heartbeat";
+			};
+		};
+
 		i2c0: i2c@e0004000 {
 			compatible = "cdns,i2c-r1p10";
 			status = "disabled";
