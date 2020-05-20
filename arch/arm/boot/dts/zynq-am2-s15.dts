@@ -151,6 +151,21 @@
 			gpio-mask-low = <0x5600>;
 		};
 
+		gpio-keys {
+			compatible = "gpio-keys-polled";
+			poll-interval = <100>;
+			reset-btn {
+				label = "KEY_RESTART";
+				gpios = <&gpio0 15 1>;
+				linux,code = <0x198>;
+			};
+			ip-report-btn {
+				label = "BTN_0";
+				gpios = <&gpio0 37 1>;
+				linux,code = <0x100>;
+			};
+		};
+
 		leds {
 			compatible = "gpio-leds";
 			green {
