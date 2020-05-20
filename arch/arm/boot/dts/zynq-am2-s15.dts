@@ -266,13 +266,14 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 			status = "okay";
-			clock-names = "memclk", "apb_pclk";
+			clock-names = "memclk", "aclk";
 			clocks = <&clkc 11>, <&clkc 44>;
-			compatible = "arm,pl353-smc-r2p1", "arm,primecell";
+			compatible = "arm,pl353-smc-r2p1";
 			interrupt-parent = <&intc>;
 			interrupts = <0 18 4>;
 			ranges ;
 			reg = <0xe000e000 0x1000>;
+
 			nand0: flash@e1000000 {
 				status = "okay";
 				compatible = "arm,pl353-nand-r2p1";
@@ -288,6 +289,7 @@
 				arm,nand-cycle-t6 = <0x4>;
 				nand-bus-width = <8>;
 			};
+
 			nor0: flash@e2000000 {
 				status = "disabled";
 				compatible = "cfi-flash";
