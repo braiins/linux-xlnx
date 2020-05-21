@@ -623,39 +623,113 @@
 		compatible = "simple-bus";
 		ranges ;
 
-		axi_bm13xx_0: axi_bm13xx@43c00000 {
-			clock-names = "s_axi_aclk";
-			clocks = <&clkc 15>;
-			compatible = "xlnx,axi-bm13xx-1.0";
-			reg = <0x43c00000 0x10000>;
+		chain1-common {
+			compatible = "generic-uio";
+			reg = <0x43c00000 0x1000>;
 		};
 
-		axi_bm13xx_1: axi_bm13xx@43c10000 {
-			clock-names = "s_axi_aclk";
-			clocks = <&clkc 15>;
-			compatible = "xlnx,axi-bm13xx-1.0";
-			reg = <0x43c10000 0x10000>;
+		chain1-cmd-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 32 4>;
+			reg = <0x43c01000 0x1000>;
 		};
 
-		axi_bm13xx_2: axi_bm13xx@43c20000 {
-			clock-names = "s_axi_aclk";
-			clocks = <&clkc 15>;
-			compatible = "xlnx,axi-bm13xx-1.0";
-			reg = <0x43c20000 0x10000>;
+		chain1-work-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 31 4>;
+			reg = <0x43c02000 0x1000>;
 		};
 
-		axi_bm13xx_3: axi_bm13xx@43c30000 {
-			clock-names = "s_axi_aclk";
-			clocks = <&clkc 15>;
-			compatible = "xlnx,axi-bm13xx-1.0";
-			reg = <0x43c30000 0x10000>;
+		chain1-work-tx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 30 4>;
+			reg = <0x43c03000 0x1000>;
 		};
 
-		axi_fan_ctrl: axi_fan_ctrl@42800000 {
-			clock-names = "s_axi_aclk";
-			clocks = <&clkc 15>;
-			compatible = "xlnx,axi-fan-ctrl-1.0";
-			reg = <0x42800000 0x10000>;
+		chain2-common {
+			compatible = "generic-uio";
+			reg = <0x43c10000 0x1000>;
+		};
+
+		chain2-cmd-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 35 4>;
+			reg = <0x43c11000 0x1000>;
+		};
+
+		chain2-work-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 34 4>;
+			reg = <0x43c12000 0x1000>;
+		};
+
+		chain2-work-tx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 33 4>;
+			reg = <0x43c13000 0x1000>;
+		};
+
+		chain3-common {
+			compatible = "generic-uio";
+			reg = <0x43c20000 0x1000>;
+		};
+
+		chain3-cmd-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 53 4>;
+			reg = <0x43c21000 0x1000>;
+		};
+
+		chain3-work-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 52 4>;
+			reg = <0x43c22000 0x1000>;
+		};
+
+		chain3-work-tx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 36 4>;
+			reg = <0x43c23000 0x1000>;
+		};
+
+		chain4-common {
+			compatible = "generic-uio";
+			reg = <0x43c30000 0x1000>;
+		};
+
+		chain4-cmd-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 56 4>;
+			reg = <0x43c31000 0x1000>;
+		};
+
+		chain4-work-rx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			interrupts = <0 55 4>;
+			reg = <0x43c32000 0x1000>;
+		};
+
+		chain4-work-tx {
+			compatible = "generic-uio";
+			interrupt-parent = <&devcfg>;
+			nterrupts = <0 54 4>;
+			reg = <0x43c33000 0x1000>;
+		};
+
+		fan-control {
+			compatible = "generic-uio";
+			reg = <0x42800000 0x1000>;
 		};
 
 		axi_gpio_input: gpio@41200000 {
