@@ -733,6 +733,7 @@ dtb-$(CONFIG_ARCH_ZYNQ) += \
 	zynq-dm1-g29.dtb \
 	zynq-am1-s9.dtb \
 	zynq-am2-s15.dtb \
+	zynq-am2-s17.dtb \
 	zynq-parallella.dtb \
 	zynq-zc702.dtb \
 	zynq-zc706.dtb \
