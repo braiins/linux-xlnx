@@ -587,6 +587,10 @@
 			interrupts = <0 36 4>;
 			interrupt-parent = <0x3>;
 		};
+		miner-glitch-monitor {
+			compatible = "generic-uio";
+			reg = <0x43d00000 0x1000>;
+		};
 	};
 
 	chosen {
